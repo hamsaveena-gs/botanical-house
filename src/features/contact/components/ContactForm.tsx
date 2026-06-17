@@ -1,0 +1,86 @@
+'use client'
+
+import { useState } from 'react'
+import { contactSchema } from '@/lib/schemas'
+import Input from '@/components/ui/Input'
+import Textarea from '@/components/ui/Textarea'
+import Button from '@/components/ui/Button'
+import Text from '@/components/ui/Text'
+
+export default function ContactForm() {
+  const [form, setForm] = useState({ name: '', email: '', phone: '', message: '' })
+  const [errors, setErrors] = useState<Partial<Record<keyof typeof form, string>>>({})
+  const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle')
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setForm(prev => ({ ...prev, [e.target.name]: e.target.value }))
+    setErrors(prev => ({ ...prev, [e.target.name]: undefined }))
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    const result = contactSchema.safeParse(form)
+    if (!result.success) {
+      const fieldErrors = result.error.flatten().fieldErrors
+      setErrors({
+        name: fieldErrors.name?.[0],
+        email: fieldErrors.email?.[0],
+        message: fieldErrors.message?.[0],
+      })
+      return
+    }
+    setStatus('sending')
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(result.data),
+      })
+      if (!res.ok) throw new Error('Failed')
+      setStatus('sent')
+      setForm({ name: '', email: '', phone: '', message: '' })
+      setErrors({})
+    } catch {
+      setStatus('error')
+    }
+  }
+
+  if (status === 'sent') {
+    return (
+      <div className='rounded-xl border border-emerald-200 bg-emerald-50 p-8 text-center'>
+        <span className='text-4xl'>🌿</span>
+        <h2 className='heading-subsection mt-4'>Message Sent!</h2>
+        <Text variant='muted' className='mt-2'>We&apos;ll get back to you soon.</Text>
+        <Button className='mt-6' onClick={() => setStatus('idle')}>Send Another</Button>
+      </div>
+    )
+  }
+
+  return (
+    <form onSubmit={handleSubmit} className='space-y-6' noValidate>
+      <div>
+        <Input label='Name' id='name' name='name' required value={form.name} onChange={handleChange} />
+        {errors.name && <Text variant='caption' className='mt-1 text-rose-500'>{errors.name}</Text>}
+      </div>
+      <div>
+        <Input label='Email' id='email' name='email' type='email' required value={form.email} onChange={handleChange} />
+        {errors.email && <Text variant='caption' className='mt-1 text-rose-500'>{errors.email}</Text>}
+      </div>
+      <div>
+        <Input label='Phone' id='phone' name='phone' type='tel' value={form.phone} onChange={handleChange} />
+      </div>
+      <div>
+        <Textarea label='Message' id='message' name='message' required rows={5} value={form.message} onChange={handleChange} />
+        {errors.message && <Text variant='caption' className='mt-1 text-rose-500'>{errors.message}</Text>}
+      </div>
+      <Button type='submit' disabled={status === 'sending'} className='w-full'>
+        {status === 'sending' ? 'Sending...' : 'Send Message'}
+      </Button>
+      {status === 'error' && (
+        <Text variant='muted' className='text-center text-red-500'>
+          Something went wrong. Please try again.
+        </Text>
+      )}
+    </form>
+  )
+}
