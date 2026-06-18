@@ -44,18 +44,18 @@ function CheckoutOrderSummary({ items, totalPrice, allFilled }: CheckoutOrderSum
           </div>
         ))}
       </div>
-      <div className='mt-4 flex flex-col gap-3 text-sm'>
-        <div className='flex justify-between text-neutral-600'>
-          <span>Subtotal</span>
-          <span>₹{totalPrice.toLocaleString()}</span>
+      <div className='mt-4 flex flex-col gap-3'>
+        <div className='flex justify-between'>
+          <Text as='span' variant='small'>Subtotal</Text>
+          <Text as='span' variant='small'>₹{totalPrice.toLocaleString()}</Text>
         </div>
-        <div className='flex justify-between text-neutral-600'>
-          <span>Shipping</span>
-          <span className={shipping === 0 ? 'text-emerald-600' : ''}>{shipping === 0 ? 'Free' : `₹${shipping}`}</span>
+        <div className='flex justify-between'>
+          <Text as='span' variant='small'>Shipping</Text>
+          <Text as='span' variant='small' className={shipping === 0 ? 'text-emerald-600' : ''}>{shipping === 0 ? 'Free' : `₹${shipping}`}</Text>
         </div>
-        <div className='flex justify-between border-t border-neutral-200 pt-3 text-base font-semibold text-neutral-900'>
-          <span>Total</span>
-          <span>₹{grandTotal.toLocaleString()}</span>
+        <div className='flex justify-between border-t border-neutral-200 pt-3'>
+          <Text as='span' variant='body' className='font-semibold text-neutral-900'>Total</Text>
+          <Text as='span' variant='body' className='font-semibold text-neutral-900'>₹{grandTotal.toLocaleString()}</Text>
         </div>
       </div>
       <Button type='submit' size='lg' disabled={!allFilled} className='mt-6 w-full'>

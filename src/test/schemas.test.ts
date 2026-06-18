@@ -1,4 +1,4 @@
-import { shippingSchema, contactSchema } from '@/lib/schemas'
+import { shippingSchema, contactSchema, notifyMeSchema, orderConfirmationSchema, orderItemSchema } from '@/lib/schemas'
 
 describe('shippingSchema', () => {
   const valid = {
@@ -101,5 +101,63 @@ describe('contactSchema', () => {
       const r = contactSchema.safeParse({ ...valid, phone: '9876543210' })
       expect(r.success).toBe(true)
     })
+  })
+})
+
+describe('orderItemSchema', () => {
+  it('passes with valid data', () => {
+    const r = orderItemSchema.safeParse({ title: 'Plant', quantity: 1, price: 499 })
+    expect(r.success).toBe(true)
+  })
+
+  it('rejects zero quantity', () => {
+    const r = orderItemSchema.safeParse({ title: 'Plant', quantity: 0, price: 499 })
+    expect(r.success).toBe(false)
+  })
+
+  it('rejects negative price', () => {
+    const r = orderItemSchema.safeParse({ title: 'Plant', quantity: 1, price: -1 })
+    expect(r.success).toBe(false)
+  })
+})
+
+describe('orderConfirmationSchema', () => {
+  const valid = {
+    email: 'test@test.com',
+    name: 'Jane',
+    orderId: '123',
+    items: [{ title: 'Plant', quantity: 1, price: 499 }],
+    total: 499,
+  }
+
+  it('passes with valid data', () => {
+    expect(orderConfirmationSchema.safeParse(valid).success).toBe(true)
+  })
+
+  it('rejects empty items', () => {
+    const r = orderConfirmationSchema.safeParse({ ...valid, items: [] })
+    expect(r.success).toBe(false)
+  })
+
+  it('rejects invalid email', () => {
+    const r = orderConfirmationSchema.safeParse({ ...valid, email: 'bad' })
+    expect(r.success).toBe(false)
+  })
+})
+
+describe('notifyMeSchema', () => {
+  it('passes with valid data', () => {
+    const r = notifyMeSchema.safeParse({ email: 'test@test.com', plantTitle: 'Peace Lily', plantSlug: 'peace-lily' })
+    expect(r.success).toBe(true)
+  })
+
+  it('rejects invalid email', () => {
+    const r = notifyMeSchema.safeParse({ email: 'bad', plantTitle: 'Peace Lily', plantSlug: 'peace-lily' })
+    expect(r.success).toBe(false)
+  })
+
+  it('rejects empty plant title', () => {
+    const r = notifyMeSchema.safeParse({ email: 'test@test.com', plantTitle: '', plantSlug: 'peace-lily' })
+    expect(r.success).toBe(false)
   })
 })

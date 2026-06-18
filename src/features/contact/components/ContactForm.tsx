@@ -5,6 +5,7 @@ import { contactSchema } from '@/lib/schemas'
 import Input from '@/components/ui/Input'
 import Textarea from '@/components/ui/Textarea'
 import Button from '@/components/ui/Button'
+import Heading from '@/components/ui/Heading'
 import Text from '@/components/ui/Text'
 
 export default function ContactForm() {
@@ -48,8 +49,8 @@ export default function ContactForm() {
   if (status === 'sent') {
     return (
       <div className='rounded-xl border border-emerald-200 bg-emerald-50 p-8 text-center'>
-        <span className='text-4xl'>🌿</span>
-        <h2 className='heading-subsection mt-4'>Message Sent!</h2>
+        <Text as='span' variant='body' className='text-4xl'>🌿</Text>
+        <Heading as='h2' variant='subsection' className='mt-4'>Message Sent!</Heading>
         <Text variant='muted' className='mt-2'>We&apos;ll get back to you soon.</Text>
         <Button className='mt-6' onClick={() => setStatus('idle')}>Send Another</Button>
       </div>

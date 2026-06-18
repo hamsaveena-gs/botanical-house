@@ -71,11 +71,19 @@ export type Section =
   | { sys: { contentType: { sys: { id: 'ctaBlock' } } }; fields: CtaBlockFields }
   | { sys: { contentType: { sys: { id: 'gallerySection' } } }; fields: PlantGridSectionFields }
 
+export interface NavigationLink {
+  sys: { id: string }
+  fields: {
+    label: string
+    href: string
+  }
+}
+
 export interface SiteSettings {
   sys: { id: string }
   fields: {
     siteName: string
-    navLinks: { label: string; href: string }[]
+    navLinks: { id: string; label: string; href: string }[]
     footerText: string
   }
 }

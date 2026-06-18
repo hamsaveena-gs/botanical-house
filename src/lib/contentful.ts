@@ -15,8 +15,33 @@ function parsePlant(raw: unknown): Plant {
   return raw as Plant
 }
 
+function parseNavigationLink(raw: unknown): { id: string; label: string; href: string } {
+  const entry = raw as { sys: { id: string }; fields: { pageTitle?: string; slug?: string } }
+  const slug = entry.fields.slug?.replace(/^\//, '') ?? ''
+  return {
+    id: entry.sys.id,
+    label: entry.fields.pageTitle ?? '',
+    href: slug ? `/${slug}` : '/',
+  }
+}
+
 function parseSiteSettings(raw: unknown): SiteSettings {
-  return raw as SiteSettings
+  const entry = raw as {
+    sys: { id: string }
+    fields: {
+      siteName?: string
+      navlist?: unknown[]
+      footerText?: string
+    }
+  }
+  return {
+    sys: entry.sys,
+    fields: {
+      siteName: entry.fields.siteName ?? 'Botanical House',
+      navLinks: (entry.fields.navlist ?? []).map(parseNavigationLink),
+      footerText: entry.fields.footerText ?? '',
+    },
+  } as SiteSettings
 }
 
 function parseCategory(raw: unknown): Category {
@@ -49,6 +74,7 @@ export const getSiteSettings = cache(async (): Promise<SiteSettings | null> => {
     const entries = await client.getEntries({
       content_type: 'SiteSettings',
       limit: 1,
+      include: 2,
     })
     return entries.items.length > 0 ? parseSiteSettings(entries.items[0]) : null
   } catch {

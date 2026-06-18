@@ -49,7 +49,7 @@ export default function Header({ settings }: Props) {
         <div className='flex items-center gap-6'>
           <nav className='hidden items-center gap-6 md:flex'>
             {navLinks.map(link => (
-              <NavLink key={link.href} {...link} />
+              <NavLink key={link.id} {...link} />
             ))}
           </nav>
           <Link href='/cart' className='relative text-sm font-medium text-neutral-500 transition-colors hover:text-neutral-900'>
@@ -75,7 +75,7 @@ export default function Header({ settings }: Props) {
         <div className='border-t border-neutral-200 bg-white px-4 py-4 md:hidden'>
           <nav className='flex flex-col gap-4'>
             {navLinks.map(link => (
-              <NavLink key={link.href} {...link} onClick={() => setOpen(false)} />
+              <NavLink key={link.id} {...link} onClick={() => setOpen(false)} />
             ))}
           </nav>
         </div>
