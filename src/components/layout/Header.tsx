@@ -33,10 +33,10 @@ export default function Header({ settings }: Props) {
   const totalItems = useTotalItems()
   const siteName = settings?.fields?.siteName ?? 'Botanical House'
   const navLinks = settings?.fields?.navLinks ?? [
-    { href: '/', label: 'Home' },
-    { href: '/plants', label: 'Plants' },
-    { href: '/about', label: 'About' },
-    { href: '/contact', label: 'Contact' },
+    { id: 'nav-home', href: '/', label: 'Home' },
+    { id: 'nav-plants', href: '/plants', label: 'Plants' },
+    { id: 'nav-about', href: '/about', label: 'About' },
+    { id: 'nav-contact', href: '/contact', label: 'Contact' },
   ]
 
   return (
