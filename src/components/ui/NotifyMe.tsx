@@ -53,7 +53,7 @@ export default function NotifyMe({ plantTitle, plantSlug }: Props) {
   }
 
   return (
-    <form onSubmit={handleSubmit} onClick={(e) => e.stopPropagation()} onMouseDown={(e) => e.stopPropagation()} noValidate>
+    <form onSubmit={handleSubmit} onClick={(e) => { e.preventDefault(); e.stopPropagation() }} onMouseDown={(e) => e.stopPropagation()} noValidate>
       <div className='flex gap-2'>
         <input
           type='email'
@@ -61,7 +61,7 @@ export default function NotifyMe({ plantTitle, plantSlug }: Props) {
           aria-label='Email address for restock notification'
           value={email}
           onChange={(e) => { setEmail(e.target.value); setStatus('idle') }}
-          onClick={(e) => e.stopPropagation()}
+          onClick={(e) => { e.preventDefault(); e.stopPropagation() }}
           onMouseDown={(e) => e.stopPropagation()}
           className='min-w-0 flex-1 rounded-full border border-neutral-300 px-4 py-2 text-sm outline-none transition-all focus:border-emerald-600'
           autoFocus
