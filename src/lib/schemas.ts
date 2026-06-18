@@ -33,7 +33,7 @@ export const shippingSchema = z.object({
   phone: z.string().min(1, 'Phone is required').regex(digitRegex, 'Phone must contain only digits').length(10, 'Phone must be exactly 10 digits'),
   address: z.string().min(1, 'Address is required'),
   city: z.string().min(1, 'City is required').regex(nameRegex, 'City must contain only letters'),
-  pincode: z.string().min(1, 'Pincode is required').length(6, 'Pincode must be exactly 6 digits'),
+  pincode: z.string().min(1, 'Pincode is required').regex(digitRegex, 'Pincode must contain only digits').length(6, 'Pincode must be exactly 6 digits'),
 })
 
 export const notifyMeSchema = z.object({
