@@ -67,6 +67,7 @@ describe('contactSchema', () => {
   const valid = {
     name: 'Jane Doe',
     email: 'jane@test.com',
+    phone: '9876543210',
     message: 'Hello',
   }
 
@@ -82,9 +83,10 @@ describe('contactSchema', () => {
   })
 
   describe('phone', () => {
-    it('passes when omitted', () => {
-      const r = contactSchema.safeParse(valid)
-      expect(r.success).toBe(true)
+    it('rejects when omitted', () => {
+      const { phone, ...withoutPhone } = valid
+      const r = contactSchema.safeParse(withoutPhone)
+      expect(r.success).toBe(false)
     })
 
     it('rejects letters', () => {

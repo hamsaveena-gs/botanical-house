@@ -53,7 +53,7 @@ export default function NotifyMe({ plantTitle, plantSlug }: Props) {
   }
 
   return (
-    <form onSubmit={handleSubmit} onClick={(e) => { e.preventDefault(); e.stopPropagation() }} onMouseDown={(e) => e.stopPropagation()} noValidate>
+    <form onSubmit={handleSubmit} onClick={(e) => e.stopPropagation()} onMouseDown={(e) => e.stopPropagation()} noValidate>
       <div className='flex gap-2'>
         <input
           type='email'

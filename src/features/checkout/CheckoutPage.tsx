@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { useCartItems, useTotalPrice, useCartActions } from '@/features/cart/hooks/useCart'
+import { useCartItems, useTotalPrice } from '@/features/cart/hooks/useCart'
 import { shippingSchema } from '@/lib/schemas'
 import Heading from '@/components/ui/Heading'
 import ShippingForm from './components/ShippingForm'
@@ -14,7 +14,6 @@ export default function CheckoutPage({ cmsPage }: { cmsPage?: Page }) {
   const router = useRouter()
   const items = useCartItems()
   const totalPrice = useTotalPrice()
-  const { clearCart } = useCartActions()
   const [form, setForm] = useState<ShippingData>({
     name: '', email: '', phone: '', address: '', city: '', pincode: '',
   })
@@ -69,8 +68,7 @@ export default function CheckoutPage({ cmsPage }: { cmsPage?: Page }) {
     })
 
     localStorage.setItem('bh-last-order', JSON.stringify(order))
-    clearCart()
-    router.push('/order-confirmation')
+    window.location.href = '/order-confirmation'
   }
 
   return (

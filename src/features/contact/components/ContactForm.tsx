@@ -26,6 +26,7 @@ export default function ContactForm() {
       setErrors({
         name: fieldErrors.name?.[0],
         email: fieldErrors.email?.[0],
+        phone: fieldErrors.phone?.[0],
         message: fieldErrors.message?.[0],
       })
       return
@@ -68,7 +69,8 @@ export default function ContactForm() {
         {errors.email && <Text variant='caption' className='mt-1 text-rose-500'>{errors.email}</Text>}
       </div>
       <div>
-        <Input label='Phone' id='phone' name='phone' type='tel' value={form.phone} onChange={handleChange} />
+        <Input label='Phone' id='phone' name='phone' type='tel' required value={form.phone} onChange={handleChange} />
+        {errors.phone && <Text variant='caption' className='mt-1 text-rose-500'>{errors.phone}</Text>}
       </div>
       <div>
         <Textarea label='Message' id='message' name='message' required rows={5} value={form.message} onChange={handleChange} />

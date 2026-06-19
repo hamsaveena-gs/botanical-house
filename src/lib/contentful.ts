@@ -7,6 +7,12 @@ const client = createClient({
   accessToken: process.env.CONTENTFUL_ACCESS_TOKEN!,
 })
 
+// Contentful's Slug field type strips leading slashes, but the page URL
+// supplies them (e.g. `/about`). Normalize to match the stored value.
+function normalizeSlug(slug: string): string {
+  return slug === '/' ? '/' : slug.replace(/^\//, '')
+}
+
 function parsePage(raw: unknown): Page {
   return raw as Page
 }
@@ -53,7 +59,7 @@ function parseCategory(raw: unknown): Category {
 export const getPageBySlug = cache(async (slug: string): Promise<Page | null> => {
   const entries = await client.getEntries({
     content_type: 'page',
-    'fields.slug': slug,
+    'fields.slug': normalizeSlug(slug),
     include: 3,
   })
   return entries.items.length > 0 ? parsePage(entries.items[0]) : null

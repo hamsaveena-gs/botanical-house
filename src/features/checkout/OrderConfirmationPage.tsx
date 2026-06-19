@@ -1,26 +1,33 @@
 'use client'
 
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import { useCartActions } from '@/features/cart/hooks/useCart'
 import Heading from '@/components/ui/Heading'
 import Text from '@/components/ui/Text'
 import Button from '@/components/ui/Button'
 
-function getOrder() {
-  if (typeof window === 'undefined') return null
-  const saved = localStorage.getItem('bh-last-order')
-  if (!saved) return null
-  const parsed = JSON.parse(saved)
-  return {
-    id: parsed.id,
-    name: parsed.customer.name,
-    email: parsed.customer.email,
-    total: parsed.total,
-    date: parsed.date,
-  }
-}
-
 export default function OrderConfirmationPage() {
-  const order = getOrder()
+  const [order, setOrder] = useState<{ id: string; name: string; email: string; total: number; date: string } | null>(null)
+  const { clearCart } = useCartActions()
+
+  useEffect(() => {
+    const saved = localStorage.getItem('bh-last-order')
+    if (!saved) return
+    try {
+      const parsed = JSON.parse(saved)
+      setOrder({
+        id: parsed.id,
+        name: parsed.customer.name,
+        email: parsed.customer.email,
+        total: parsed.total,
+        date: parsed.date,
+      })
+      clearCart()
+    } catch {
+      // ignore parse errors
+    }
+  }, [clearCart])
 
   if (!order) {
     return (

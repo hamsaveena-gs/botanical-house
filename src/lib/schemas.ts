@@ -6,10 +6,7 @@ const digitRegex = /^\d+$/
 export const contactSchema = z.object({
   name: z.string().min(1, 'Name is required').regex(nameRegex, 'Name must contain only letters'),
   email: z.string().email('Invalid email address'),
-  phone: z.string().optional().refine(
-    (v) => !v || (digitRegex.test(v) && v.length === 10),
-    'Phone must be exactly 10 digits'
-  ),
+  phone: z.string().min(1, 'Phone is required').regex(digitRegex, 'Phone must contain only digits').length(10, 'Phone must be exactly 10 digits'),
   message: z.string().min(1, 'Message is required'),
 })
 
