@@ -8,7 +8,8 @@ export async function POST(req: Request) {
     }
 
     const body = await req.json()
-    const parsed = notifyMeSchema.safeParse(body)
+    const cleaned = { ...body, plantSlug: (body.plantSlug ?? '').trim().toLowerCase() }
+    const parsed = notifyMeSchema.safeParse(cleaned)
     if (!parsed.success) {
       return Response.json({ error: parsed.error.flatten().fieldErrors }, { status: 400 })
     }
