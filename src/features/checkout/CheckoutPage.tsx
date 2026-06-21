@@ -8,9 +8,9 @@ import Heading from '@/components/ui/Heading'
 import ShippingForm from './components/ShippingForm'
 import CheckoutOrderSummary from './components/CheckoutOrderSummary'
 import type { ShippingData } from '@/lib/schemas'
-import type { Page } from '@/types'
+import type { Page, FormContent } from '@/types'
 
-export default function CheckoutPage({ cmsPage }: { cmsPage?: Page }) {
+export default function CheckoutPage({ cmsPage, formContent }: { cmsPage?: Page; formContent?: FormContent | null }) {
   const router = useRouter()
   const items = useCartItems()
   const totalPrice = useTotalPrice()
@@ -75,7 +75,7 @@ export default function CheckoutPage({ cmsPage }: { cmsPage?: Page }) {
     <div className='mx-auto max-w-4xl px-4 pt-24 pb-12 sm:pt-28 sm:pb-20'>
       <Heading as='h1' variant='page'>{cmsPage?.fields.title ?? 'Checkout'}</Heading>
       <form onSubmit={handleSubmit} className='mt-8 grid gap-8 lg:grid-cols-[1fr_380px]' noValidate>
-        <ShippingForm form={form} errors={errors} onChange={handleChange} />
+        <ShippingForm form={form} errors={errors} onChange={handleChange} formContent={formContent} />
         <CheckoutOrderSummary items={items} totalPrice={totalPrice} allFilled={!Object.values(errors).some(Boolean)} />
       </form>
     </div>

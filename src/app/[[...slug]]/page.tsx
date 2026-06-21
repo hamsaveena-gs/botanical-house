@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation'
-import { getPageBySlug, getAllPageSlugs } from '@/lib/contentful'
+import { getPageBySlug, getAllPageSlugs, getFormContent } from '@/lib/contentful'
 import HomePage from '@/features/home/HomePage'
 import ContactPage from '@/features/contact/ContactPage'
 
@@ -41,7 +41,8 @@ export default async function CatchAllPage({ params }: Props) {
   if (!page) notFound()
 
   if (slug === '/contact') {
-    return <ContactPage title={page.fields.title} subHeading={page.fields.subHeading} />
+    const formContent = await getFormContent()
+    return <ContactPage title={page.fields.title} subHeading={page.fields.subHeading} formContent={formContent} />
   }
 
   return <HomePage page={page} />

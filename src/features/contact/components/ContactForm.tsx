@@ -7,8 +7,23 @@ import Textarea from '@/components/ui/Textarea'
 import Button from '@/components/ui/Button'
 import Heading from '@/components/ui/Heading'
 import Text from '@/components/ui/Text'
+import type { FormContent } from '@/types'
 
-export default function ContactForm() {
+interface ContactFormProps {
+  formContent?: FormContent | null
+}
+
+const DEFAULTS = {
+  firstNameLabel: 'Name',
+  emailLabel: 'Email',
+  phoneLabel: 'Phone',
+  messageLabel: 'Message',
+  submitBtnText: 'Send Message',
+}
+
+export default function ContactForm({ formContent }: ContactFormProps) {
+  const l = formContent?.fields ?? DEFAULTS
+
   const [form, setForm] = useState({ name: '', email: '', phone: '', message: '' })
   const [errors, setErrors] = useState<Partial<Record<keyof typeof form, string>>>({})
   const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle')
@@ -61,23 +76,23 @@ export default function ContactForm() {
   return (
     <form onSubmit={handleSubmit} className='space-y-6' noValidate>
       <div>
-        <Input label='Name' id='name' name='name' required value={form.name} onChange={handleChange} />
+        <Input label={l.firstNameLabel} id='name' name='name' value={form.name} onChange={handleChange} />
         {errors.name && <Text variant='caption' className='mt-1 text-rose-500'>{errors.name}</Text>}
       </div>
       <div>
-        <Input label='Email' id='email' name='email' type='email' required value={form.email} onChange={handleChange} />
+        <Input label={l.emailLabel} id='email' name='email' type='email' value={form.email} onChange={handleChange} />
         {errors.email && <Text variant='caption' className='mt-1 text-rose-500'>{errors.email}</Text>}
       </div>
       <div>
-        <Input label='Phone' id='phone' name='phone' type='tel' required value={form.phone} onChange={handleChange} />
+        <Input label={l.phoneLabel} id='phone' name='phone' type='tel' value={form.phone} onChange={handleChange} />
         {errors.phone && <Text variant='caption' className='mt-1 text-rose-500'>{errors.phone}</Text>}
       </div>
       <div>
-        <Textarea label='Message' id='message' name='message' required rows={5} value={form.message} onChange={handleChange} />
+        <Textarea label={l.messageLabel} id='message' name='message' rows={5} value={form.message} onChange={handleChange} />
         {errors.message && <Text variant='caption' className='mt-1 text-rose-500'>{errors.message}</Text>}
       </div>
       <Button type='submit' disabled={status === 'sending'} className='w-full'>
-        {status === 'sending' ? 'Sending...' : 'Send Message'}
+        {status === 'sending' ? 'Sending...' : l.submitBtnText}
       </Button>
       {status === 'error' && (
         <Text variant='muted' className='text-center text-red-500'>

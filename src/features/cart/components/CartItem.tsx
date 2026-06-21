@@ -59,7 +59,7 @@ function CartItem({ item, onUpdateQuantity, onRemove }: CartItemProps) {
             <div className='flex items-center gap-3 rounded-full border border-neutral-200 px-3 py-1'>
               <button onClick={handleDecrease} className='flex h-6 w-6 items-center justify-center rounded-full text-sm font-medium text-neutral-600 transition-colors hover:bg-neutral-100'>−</button>
               <Text as='span' className='w-6 text-center text-sm font-semibold text-neutral-900'>{item.quantity}</Text>
-              <button onClick={handleIncrease} disabled={item.quantity >= 2} className='flex h-6 w-6 items-center justify-center rounded-full text-sm font-medium text-neutral-600 transition-colors hover:bg-neutral-100'>+</button>
+              <button onClick={handleIncrease} disabled={item.quantity >= 2} className='flex h-6 w-6 items-center justify-center rounded-full text-sm font-medium text-neutral-600 transition-colors hover:bg-neutral-100 disabled:cursor-not-allowed disabled:opacity-40'>+</button>
             </div>
             <div className='flex items-center gap-4'>
               <Text as='span' className='font-semibold text-neutral-900'>₹{(item.price * item.quantity).toLocaleString()}</Text>

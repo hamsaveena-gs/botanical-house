@@ -8,26 +8,31 @@ import Text from '@/components/ui/Text'
 import Button from '@/components/ui/Button'
 
 export default function OrderConfirmationPage() {
+  const [loaded, setLoaded] = useState(false)
   const [order, setOrder] = useState<{ id: string; name: string; email: string; total: number; date: string } | null>(null)
   const { clearCart } = useCartActions()
 
   useEffect(() => {
     const saved = localStorage.getItem('bh-last-order')
-    if (!saved) return
-    try {
-      const parsed = JSON.parse(saved)
-      setOrder({
-        id: parsed.id,
-        name: parsed.customer.name,
-        email: parsed.customer.email,
-        total: parsed.total,
-        date: parsed.date,
-      })
-      clearCart()
-    } catch {
-      // ignore parse errors
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved)
+        setOrder({
+          id: parsed.id,
+          name: parsed.customer.name,
+          email: parsed.customer.email,
+          total: parsed.total,
+          date: parsed.date,
+        })
+        clearCart()
+      } catch {
+        // ignore parse errors
+      }
     }
+    setLoaded(true)
   }, [clearCart])
+
+  if (!loaded) return null
 
   if (!order) {
     return (

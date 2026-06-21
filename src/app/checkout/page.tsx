@@ -1,4 +1,4 @@
-import { getPageBySlug } from '@/lib/contentful'
+import { getPageBySlug, getFormContent } from '@/lib/contentful'
 import type { Metadata } from 'next'
 import CheckoutPage from '@/features/checkout/CheckoutPage'
 
@@ -15,6 +15,9 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function Checkout() {
-  const cmsPage = await getPageBySlug('/checkout')
-  return <CheckoutPage cmsPage={cmsPage ?? undefined} />
+  const [cmsPage, formContent] = await Promise.all([
+    getPageBySlug('/checkout'),
+    getFormContent(),
+  ])
+  return <CheckoutPage cmsPage={cmsPage ?? undefined} formContent={formContent} />
 }

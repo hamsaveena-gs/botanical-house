@@ -1,6 +1,6 @@
 import { cache } from 'react'
 import { createClient } from 'contentful'
-import type { Page, Plant, Category, SiteSettings } from '@/types'
+import type { Page, Plant, Category, SiteSettings, FormContent } from '@/types'
 
 const client = createClient({
   space: process.env.CONTENTFUL_SPACE_ID!,
@@ -53,6 +53,20 @@ function parseSiteSettings(raw: unknown): SiteSettings {
 function parseCategory(raw: unknown): Category {
   return raw as Category
 }
+
+// --- Form Content ---
+
+export const getFormContent = cache(async (): Promise<FormContent | null> => {
+  try {
+    const entries = await client.getEntries({
+      content_type: 'formContent',
+      limit: 1,
+    })
+    return entries.items.length > 0 ? (entries.items[0] as unknown as FormContent) : null
+  } catch {
+    return null
+  }
+})
 
 // --- Pages ---
 

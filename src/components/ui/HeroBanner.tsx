@@ -4,7 +4,14 @@ import Text from '@/components/ui/Text'
 import Button from '@/components/ui/Button'
 import type { HeroBannerFields } from '@/types'
 
+function normalize(value: string): string {
+  return value.trim().toLowerCase().replace(/\s+/g, '-')
+}
+
 export default function HeroBanner({ fields }: { fields: HeroBannerFields }) {
+  const bg = normalize(fields.ctaBackgroundColor ?? '')
+  const isEmerald = bg === 'emerald' || bg === 'emerald-green'
+
   const bgUrl = fields.backgroundImage?.fields?.file?.url
     ? `https:${fields.backgroundImage.fields.file.url}`
     : ''
@@ -20,7 +27,7 @@ export default function HeroBanner({ fields }: { fields: HeroBannerFields }) {
           </Text>
         )}
         {fields.ctaText && fields.ctaLink && (
-          <Button href={fields.ctaLink} variant='white' size='md'>{fields.ctaText}</Button>
+          <Button href={fields.ctaLink} variant={isEmerald ? 'primary' : 'white'} size='md'>{fields.ctaText}</Button>
         )}
       </div>
     </section>

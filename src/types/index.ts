@@ -44,11 +44,13 @@ export interface HeroBannerFields {
   backgroundImage: ContentfulAsset
   ctaText?: string
   ctaLink?: string
+  ctaBackgroundColor: string
 }
 
 export interface RichTextSectionFields {
   heading?: string
   body: unknown
+  backgroundColor: string
 }
 
 export interface CtaBlockFields {
@@ -85,6 +87,21 @@ export interface SiteSettings {
     siteName: string
     navLinks: { id: string; label: string; href: string }[]
     footerText: string
+  }
+}
+
+export interface FormContent {
+  sys: { id: string }
+  fields: {
+    firstNameLabel: string
+    emailLabel: string
+    phoneLabel: string
+    messageLabel: string
+    submitBtnText: string
+    fullNameLabel?: string
+    addressLabel?: string
+    cityLabel?: string
+    pincodeLabel?: string
   }
 }
 
