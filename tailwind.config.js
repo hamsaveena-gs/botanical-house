@@ -33,14 +33,27 @@ module.exports = {
           dark: '#171717',
           light: '#525252',
         },
+        btn: {
+          primary: '#059669',
+          'primary-hover': '#047857',
+          secondary: '#d4d4d4',
+          ghost: '#525252',
+          'ghost-hover': '#f5f5f5',
+          danger: '#f43f5e',
+          'danger-hover': '#e11d48',
+          white: '#ffffff',
+          'white-hover': '#f5f5f5',
+        },
+        outline: {
+          default: '#171717',
+        },
       },
       fontSize: {
-        hero: ['2.25rem', { lineHeight: '1.1', letterSpacing: '-0.025em' }],
-        page: ['2.25rem', { lineHeight: '1.1', letterSpacing: '-0.025em' }],
-        section: ['1.875rem', { lineHeight: '1.2', letterSpacing: '-0.025em' }],
-        subsection: ['1.125rem', { lineHeight: '1.3' }],
-        giant: ['6rem', { lineHeight: '1' }],
-
+        hero: ['36px', { lineHeight: '39.6px', letterSpacing: '-0.025em' }],
+        page: ['36px', { lineHeight: '39.6px', letterSpacing: '-0.025em' }],
+        section: ['30px', { lineHeight: '36px', letterSpacing: '-0.025em' }],
+        subsection: ['18px', { lineHeight: '23.4px' }],
+        giant: ['96px', { lineHeight: '96px' }],
       },
       fontFamily: {
         comfortaa: ['Comfortaa', 'sans-serif'],

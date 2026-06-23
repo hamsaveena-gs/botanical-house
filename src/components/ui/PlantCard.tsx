@@ -24,7 +24,7 @@ function PlantCard({ plant }: { plant: Plant }) {
   const originalPrice = isOnSale ? Math.max(price, compareAtPrice!) : null
 
   return (
-    <Link href={`/plants/${slug?.trim()}`} className='group block'>
+    <Link href={`/plants/${slug?.trim()}`} className='group flex flex-col'>
       <div className='relative mb-3 aspect-[4/5] overflow-hidden rounded-2xl bg-neutral-100 shadow-md transition-shadow duration-300 group-hover:shadow-xl'>
           {imgUrl && (
             <Image src={imgUrl} alt={title} fill sizes='(max-width: 640px) 50vw, 25vw' className='object-cover transition-transform duration-500 group-hover:scale-105' />
@@ -47,7 +47,7 @@ function PlantCard({ plant }: { plant: Plant }) {
           </div>
         )}
       </div>
-      <div className='px-1'>
+      <div className='flex flex-1 flex-col px-1 pb-3'>
         {category && category.length > 0 && (
           <div className='mb-1 flex flex-wrap gap-1.5'>
             {category.map((cat) => (
@@ -64,40 +64,42 @@ function PlantCard({ plant }: { plant: Plant }) {
             <Text as='span' className='text-sm text-neutral-400 line-through'>₹{originalPrice.toLocaleString()}</Text>
           )}
         </div>
-        {!inStock ? (
-          <div className='mt-3' onClick={(e) => e.stopPropagation()} onMouseDown={(e) => e.stopPropagation()}>
-            <NotifyMe plantTitle={title} plantSlug={slug?.trim() ?? ''} />
-          </div>
-        ) : qty === 0 ? (
-          <Button
-            onClick={(e) => { e.preventDefault(); e.stopPropagation(); addItem({ id: plant.sys.id, title, price, image: imgUrl, slug: slug?.trim() ?? '' }) }}
-            size='md'
-            className='mt-3 w-full'
-          >
-            Add to Cart
-          </Button>
-        ) : (
-          <div className='mt-3 flex w-full items-center justify-center gap-3 rounded-full border border-neutral-200 py-1.5'>
+        <div className='mt-auto pt-3'>
+          {!inStock ? (
+            <div onClick={(e) => e.stopPropagation()} onMouseDown={(e) => e.stopPropagation()}>
+              <NotifyMe plantTitle={title} plantSlug={slug?.trim() ?? ''} />
+            </div>
+          ) : qty === 0 ? (
             <Button
-              variant='ghost'
-              size='sm'
-              onClick={(e) => { e.preventDefault(); e.stopPropagation(); updateQuantity(plant.sys.id, qty - 1) }}
-              className='h-7 w-7 p-0'
+              onClick={(e) => { e.preventDefault(); e.stopPropagation(); addItem({ id: plant.sys.id, title, price, image: imgUrl, slug: slug?.trim() ?? '' }) }}
+              size='md'
+              className='w-full'
             >
-              −
+              Add to Cart
             </Button>
-            <Text as='span' className='w-6 text-center text-sm font-semibold text-neutral-900'>{qty}</Text>
-            <Button
-              variant='ghost'
-              size='sm'
-              onClick={(e) => { e.preventDefault(); e.stopPropagation(); updateQuantity(plant.sys.id, qty + 1) }}
-              disabled={qty >= 2}
-              className='h-7 w-7 p-0'
-            >
-              +
-            </Button>
-          </div>
-        )}
+          ) : (
+            <div className='flex w-full items-center justify-center gap-3 rounded-full border border-neutral-200 py-1.5'>
+              <Button
+                variant='ghost'
+                size='sm'
+                onClick={(e) => { e.preventDefault(); e.stopPropagation(); updateQuantity(plant.sys.id, qty - 1) }}
+                className='h-7 w-7 p-0'
+              >
+                −
+              </Button>
+              <Text as='span' className='w-6 text-center text-sm font-semibold text-neutral-900'>{qty}</Text>
+              <Button
+                variant='ghost'
+                size='sm'
+                onClick={(e) => { e.preventDefault(); e.stopPropagation(); updateQuantity(plant.sys.id, qty + 1) }}
+                disabled={qty >= 2}
+                className='h-7 w-7 p-0'
+              >
+                +
+              </Button>
+            </div>
+          )}
+        </div>
       </div>
     </Link>
   )
