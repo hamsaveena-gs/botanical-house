@@ -2,9 +2,8 @@ type EventParams = Record<string, string | number | boolean | undefined>
 
 function push(data: Record<string, unknown>) {
   if (typeof window === 'undefined') return
-  const w = window as { dataLayer?: unknown[] }
-  w.dataLayer = w.dataLayer || []
-  w.dataLayer.push(data)
+  window.dataLayer = window.dataLayer || []
+  window.dataLayer.push(data)
 }
 
 export function pageview(path: string, title?: string) {
