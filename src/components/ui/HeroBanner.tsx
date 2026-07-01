@@ -18,7 +18,7 @@ export default function HeroBanner({ fields }: { fields: HeroBannerFields }) {
 
   return (
     <section className='relative flex min-h-[80vh] items-center justify-center overflow-hidden bg-neutral-900'>
-      {bgUrl && <Image src={bgUrl} alt='' fill sizes='100vw' priority className='object-cover opacity-50' />}
+      {bgUrl && <Image src={bgUrl} alt='' fill sizes='100vw' priority fetchPriority='high' className='object-cover opacity-50' />}
       <div className='relative z-10 mx-auto max-w-4xl px-4 text-center text-white'>
         <Heading as='h1' variant='hero' className='mb-4'>{fields.heading}</Heading>
         {fields.subHeading && (

@@ -20,6 +20,7 @@ export default function ProductImages({ images, title }: ProductImagesProps) {
               sizes='(max-width: 768px) 100vw, 50vw'
               className='object-cover'
               priority={i === 0}
+              fetchPriority={i === 0 ? 'high' : 'auto'}
             />
           </div>
         ) : null
