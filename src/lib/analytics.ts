@@ -1,43 +1,42 @@
-const isDev = typeof window !== 'undefined' && window.location.hostname === 'localhost'
-
 type EventParams = Record<string, string | number | boolean | undefined>
 
-function ga(...args: unknown[]) {
-  if (isDev) return
-  const w = typeof window !== 'undefined' ? (window as unknown as Record<string, unknown>) : null
-  if (w && typeof w.gtag === 'function') {
-    ;(w.gtag as (...a: unknown[]) => void)(...args)
-  }
+function push(data: Record<string, unknown>) {
+  if (typeof window === 'undefined') return
+  window.dataLayer = window.dataLayer || []
+  window.dataLayer.push(data)
 }
 
 export function pageview(path: string, title?: string) {
-  ga('event', 'page_view', { page_path: path, page_title: title })
+  push({ event: 'page_view', page_path: path, page_title: title })
 }
 
 export function event(name: string, params?: EventParams) {
-  ga('event', name, params)
+  push({ event: name, ...params })
 }
 
 export const AnalyticsEvents = {
   addToCart(product: { id: string; name: string; price: number }) {
-    event('add_to_cart', {
+    push({
+      event: 'add_to_cart',
       currency: 'INR',
       value: product.price,
-      items: JSON.stringify([{ item_id: product.id, item_name: product.name, price: product.price, quantity: 1 }]),
+      items: [{ item_id: product.id, item_name: product.name, price: product.price, quantity: 1 }],
     })
   },
   removeFromCart(product: { id: string; name: string; price: number }) {
-    event('remove_from_cart', {
+    push({
+      event: 'remove_from_cart',
       currency: 'INR',
       value: product.price,
-      items: JSON.stringify([{ item_id: product.id, item_name: product.name, price: product.price }]),
+      items: [{ item_id: product.id, item_name: product.name, price: product.price }],
     })
   },
   beginCheckout(value: number) {
-    event('begin_checkout', { currency: 'INR', value })
+    push({ event: 'begin_checkout', currency: 'INR', value })
   },
   purchase(order: { id: string; value: number; items: number }) {
-    event('purchase', {
+    push({
+      event: 'purchase',
       transaction_id: order.id,
       currency: 'INR',
       value: order.value,
@@ -45,9 +44,9 @@ export const AnalyticsEvents = {
     })
   },
   contactFormSubmit() {
-    event('contact_form_submit')
+    push({ event: 'contact_form_submit' })
   },
   notifyMe(plant: { name: string }) {
-    event('notify_me', { plant_name: plant.name })
+    push({ event: 'notify_me', plant_name: plant.name })
   },
 }
