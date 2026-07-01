@@ -30,8 +30,11 @@ export default function ContactForm({ formContent }: ContactFormProps) {
   const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle')
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setForm(prev => ({ ...prev, [e.target.name]: e.target.value }))
+    const next = { ...form, [e.target.name]: e.target.value }
+    setForm(next)
     setErrors(prev => ({ ...prev, [e.target.name]: undefined }))
+    window.dataLayer = window.dataLayer || []
+    window.dataLayer.push({ event: 'form_field_change', form_type: 'contact', field: e.target.name, form_values: next })
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -39,12 +42,14 @@ export default function ContactForm({ formContent }: ContactFormProps) {
     const result = contactSchema.safeParse(form)
     if (!result.success) {
       const fieldErrors = result.error.flatten().fieldErrors
-      setErrors({
-        name: fieldErrors.name?.[0],
-        email: fieldErrors.email?.[0],
-        phone: fieldErrors.phone?.[0],
-        message: fieldErrors.message?.[0],
-      })
+      const errs: Record<string, string> = {}
+      if (fieldErrors.name?.[0]) errs.name = fieldErrors.name[0]
+      if (fieldErrors.email?.[0]) errs.email = fieldErrors.email[0]
+      if (fieldErrors.phone?.[0]) errs.phone = fieldErrors.phone[0]
+      if (fieldErrors.message?.[0]) errs.message = fieldErrors.message[0]
+      setErrors(errs)
+      window.dataLayer = window.dataLayer || []
+      window.dataLayer.push({ event: 'form_error', form_type: 'contact', filled_fields: form, errors: errs })
       return
     }
     setStatus('sending')
@@ -56,11 +61,15 @@ export default function ContactForm({ formContent }: ContactFormProps) {
       })
       if (!res.ok) throw new Error('Failed')
       setStatus('sent')
+      window.dataLayer = window.dataLayer || []
+      window.dataLayer.push({ event: 'form_success', form_type: 'contact' })
       setForm({ name: '', email: '', phone: '', message: '' })
       setErrors({})
       AnalyticsEvents.contactFormSubmit()
     } catch {
       setStatus('error')
+      window.dataLayer = window.dataLayer || []
+      window.dataLayer.push({ event: 'form_error', form_type: 'contact', filled_fields: form, errors: { api: 'Failed to send' } })
     }
   }
 
