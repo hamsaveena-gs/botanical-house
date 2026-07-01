@@ -6,6 +6,9 @@ import PlantCard from '@/components/ui/PlantCard'
 import Heading from '@/components/ui/Heading'
 import type { PlantGridSectionFields } from '@/types'
 
+const GAP = 24
+const CARD_WIDTH = 300
+
 export default function PlantCarousel({ fields }: { fields: PlantGridSectionFields }) {
   const scrollRef = useRef<HTMLDivElement>(null)
   const [canScrollLeft, setCanScrollLeft] = useState(false)
@@ -15,16 +18,16 @@ export default function PlantCarousel({ fields }: { fields: PlantGridSectionFiel
   const updateScrollState = useCallback(() => {
     const el = scrollRef.current
     if (!el) return
-    setCanScrollLeft(el.scrollLeft > 8)
-    setCanScrollRight(el.scrollLeft < el.scrollWidth - el.clientWidth - 8)
+    requestAnimationFrame(() => {
+      setCanScrollLeft(el.scrollLeft > 8)
+      setCanScrollRight(el.scrollLeft < el.scrollWidth - el.clientWidth - 8)
+    })
   }, [])
 
   const scrollBy = useCallback((direction: 'left' | 'right') => {
     const el = scrollRef.current
     if (!el) return
-    const cardWidth = el.querySelector('a')?.clientWidth ?? 300
-    const gap = 24
-    el.scrollBy({ left: (cardWidth + gap) * (direction === 'left' ? -1 : 1), behavior: 'smooth' })
+    el.scrollBy({ left: (CARD_WIDTH + GAP) * (direction === 'left' ? -1 : 1), behavior: 'smooth' })
   }, [])
 
   if (itemCount === 0) return null
