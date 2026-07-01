@@ -3,7 +3,8 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import Text from '@/components/ui/Text'
-import { memo, useState } from 'react'
+import { memo, useState, useCallback } from 'react'
+import { AnalyticsEvents } from '@/lib/analytics'
 
 interface CartItemData {
   id: string
@@ -35,10 +36,15 @@ function CartItem({ item, onUpdateQuantity, onRemove }: CartItemProps) {
     onUpdateQuantity(item.id, item.quantity + 1)
   }
 
-  const handleDecrease = () => {
+  const handleDecrease = useCallback(() => {
     setShowMax(false)
     onUpdateQuantity(item.id, item.quantity - 1)
-  }
+  }, [onUpdateQuantity, item.id, item.quantity])
+
+  const handleRemove = useCallback(() => {
+    AnalyticsEvents.removeFromCart({ id: item.id, name: item.title, price: item.price })
+    onRemove(item.id)
+  }, [onRemove, item.id, item.title, item.price])
 
   return (
     <div className='flex gap-4 border-b border-neutral-100 py-5'>
@@ -57,13 +63,13 @@ function CartItem({ item, onUpdateQuantity, onRemove }: CartItemProps) {
         <div className='flex flex-col gap-1'>
           <div className='flex items-center justify-between'>
             <div className='flex items-center gap-3 rounded-full border border-neutral-200 px-3 py-1'>
-              <button onClick={handleDecrease} className='flex h-6 w-6 items-center justify-center rounded-full text-sm font-medium text-neutral-600 transition-colors hover:bg-neutral-100'>−</button>
+              <button onClick={handleDecrease} className='flex h-6 w-6 items-center justify-center rounded-full text-sm font-medium text-neutral-600 transition-colors hover:bg-neutral-100' aria-label={`Decrease quantity of ${item.title}`}>−</button>
               <Text as='span' className='w-6 text-center text-sm font-semibold text-neutral-900'>{item.quantity}</Text>
-              <button onClick={handleIncrease} disabled={item.quantity >= 2} className='flex h-6 w-6 items-center justify-center rounded-full text-sm font-medium text-neutral-600 transition-colors hover:bg-neutral-100 disabled:cursor-not-allowed disabled:opacity-40'>+</button>
+              <button onClick={handleIncrease} disabled={item.quantity >= 2} className='flex h-6 w-6 items-center justify-center rounded-full text-sm font-medium text-neutral-600 transition-colors hover:bg-neutral-100 disabled:cursor-not-allowed disabled:opacity-40' aria-label={`Increase quantity of ${item.title}`}>+</button>
             </div>
             <div className='flex items-center gap-4'>
               <Text as='span' className='font-semibold text-neutral-900'>₹{(item.price * item.quantity).toLocaleString()}</Text>
-              <button onClick={() => onRemove(item.id)} className='text-sm text-neutral-300 transition-colors hover:text-rose-500'>✕</button>
+              <button onClick={handleRemove} className='text-sm text-neutral-300 transition-colors hover:text-rose-500' aria-label={`Remove ${item.title} from cart`}>✕</button>
             </div>
           </div>
           {showMax && <Text variant='caption' className='text-rose-500'>Max 2 per plant</Text>}

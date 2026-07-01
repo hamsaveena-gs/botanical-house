@@ -53,8 +53,8 @@ export default function ShippingForm({ form, errors = {}, onChange, formContent 
       <div className='grid grid-cols-2 gap-4'>
         {FIELDS.map(({ name, type, full }) => (
           <div key={name} className={full ? 'col-span-2 flex flex-col gap-1.5' : 'flex flex-col gap-1.5'}>
-            <Input id={name} name={name} label={label(name)} type={type} value={form[name]} onChange={onChange} className={full ? 'col-span-2' : ''} />
-            {errors[name] && <Text variant='caption' className='text-rose-500'>{errors[name]}</Text>}
+            <Input id={name} name={name} label={label(name)} type={type} value={form[name]} onChange={onChange} error={errors[name]} className={full ? 'col-span-2' : ''} />
+            {errors[name] && <Text variant='caption' className='text-rose-500' id={`${name}-error`} role='alert'>{errors[name]}</Text>}
           </div>
         ))}
       </div>

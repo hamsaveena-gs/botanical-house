@@ -13,7 +13,7 @@ export default function CategoryFilters({ categories, activeSlugs }: CategoryFil
   }
 
   return (
-    <div className='mb-10 flex flex-wrap justify-center gap-3'>
+    <div className='mb-10 flex flex-wrap justify-center gap-3' role='group' aria-label='Filter by category'>
       <Link
         href='/plants'
         className={`rounded-full px-5 py-2 text-sm font-medium transition-all ${
@@ -21,6 +21,7 @@ export default function CategoryFilters({ categories, activeSlugs }: CategoryFil
             ? 'bg-emerald-600 text-white border-emerald-600'
             : 'border border-neutral-200 text-neutral-600 hover:border-emerald-600 hover:text-emerald-600'
         }`}
+        aria-current={activeSlugs.length === 0 ? 'page' : undefined}
       >
         All
       </Link>
@@ -39,6 +40,7 @@ export default function CategoryFilters({ categories, activeSlugs }: CategoryFil
                 ? 'bg-emerald-600 text-white border-emerald-600'
                 : 'border border-neutral-200 text-neutral-600 hover:border-emerald-600 hover:text-emerald-600'
             }`}
+            aria-current={isActive ? 'page' : undefined}
           >
             {cat.fields.title}
           </Link>

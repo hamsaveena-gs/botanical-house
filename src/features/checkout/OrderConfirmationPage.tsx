@@ -13,6 +13,7 @@ export default function OrderConfirmationPage() {
   const { clearCart } = useCartActions()
 
   useEffect(() => {
+    /* eslint-disable react-hooks/set-state-in-effect */
     const saved = localStorage.getItem('bh-last-order')
     if (saved) {
       try {
@@ -30,6 +31,7 @@ export default function OrderConfirmationPage() {
       }
     }
     setLoaded(true)
+    /* eslint-enable react-hooks/set-state-in-effect */
   }, [clearCart])
 
   if (!loaded) return null

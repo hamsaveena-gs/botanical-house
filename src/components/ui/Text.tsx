@@ -4,6 +4,8 @@ interface TextProps {
   className?: string
   children: React.ReactNode
   htmlFor?: string
+  role?: string
+  id?: string
 }
 
 export default function Text({
@@ -12,9 +14,11 @@ export default function Text({
   className = '',
   children,
   htmlFor,
+  role,
+  id,
 }: TextProps) {
   return (
-    <Tag className={`text-${variant} ${className}`} htmlFor={htmlFor}>
+    <Tag className={`text-${variant} ${className}`} htmlFor={htmlFor} role={role} id={id}>
       {children}
     </Tag>
   )

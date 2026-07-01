@@ -4,6 +4,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useTotalItems } from '@/features/cart/hooks/useCart'
+import { useScrollLock } from '@/hooks/useScrollLock'
 import type { SiteSettings } from '@/types'
 
 interface Props {
@@ -31,6 +32,7 @@ function NavLink({ href, label, onClick }: { href: string; label: string; onClic
 export default function Header({ settings }: Props) {
   const [open, setOpen] = useState(false)
   const totalItems = useTotalItems()
+  useScrollLock(open)
   const siteName = settings?.fields?.siteName ?? 'Botanical House'
   const navLinks = settings?.fields?.navLinks ?? [
     { id: 'nav-home', href: '/', label: 'Home' },
@@ -52,7 +54,7 @@ export default function Header({ settings }: Props) {
               <NavLink key={link.id} {...link} />
             ))}
           </nav>
-          <Link href='/cart' className='relative text-sm font-medium text-neutral-500 transition-colors hover:text-neutral-900'>
+          <Link href='/cart' className='relative text-sm font-medium text-neutral-500 transition-colors hover:text-neutral-900' aria-label={`Shopping cart${totalItems > 0 ? ` (${totalItems} items)` : ''}`}>
             <svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round'>
               <circle cx='9' cy='21' r='1'/>
               <circle cx='20' cy='21' r='1'/>
@@ -64,7 +66,7 @@ export default function Header({ settings }: Props) {
               </span>
             )}
           </Link>
-          <button onClick={() => setOpen(!open)} className='md:hidden' aria-label='Toggle menu'>
+          <button onClick={() => setOpen(!open)} className='md:hidden' aria-label='Toggle menu' aria-expanded={open} aria-controls='mobile-menu'>
             <svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round'>
               {open ? <><line x1='18' y1='6' x2='6' y2='18'/><line x1='6' y1='6' x2='18' y2='18'/></> : <><line x1='3' y1='6' x2='21' y2='6'/><line x1='3' y1='12' x2='21' y2='12'/><line x1='3' y1='18' x2='21' y2='18'/></>}
             </svg>
@@ -72,7 +74,7 @@ export default function Header({ settings }: Props) {
         </div>
       </div>
       {open && (
-        <div className='border-t border-neutral-200 bg-white px-4 py-4 md:hidden'>
+        <div id='mobile-menu' className='border-t border-neutral-200 bg-white px-4 py-4 md:hidden'>
           <nav className='flex flex-col gap-4'>
             {navLinks.map(link => (
               <NavLink key={link.id} {...link} onClick={() => setOpen(false)} />

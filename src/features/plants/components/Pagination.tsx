@@ -21,17 +21,23 @@ export default function Pagination({ currentPage, totalPages, category }: Pagina
   const activeCls = 'rounded-full bg-emerald-600 px-4 py-2 text-sm font-medium text-white'
 
   return (
-    <div className='mt-12 flex items-center justify-center gap-2'>
+    <div className='mt-12 flex items-center justify-center gap-2' role='navigation' aria-label='Pagination'>
       {currentPage > 1 && (
-        <Link href={href(currentPage - 1)} className={neutralCls}>← Prev</Link>
+        <Link href={href(currentPage - 1)} className={neutralCls} aria-label='Go to previous page'>← Prev</Link>
       )}
       {Array.from({ length: totalPages }, (_, i) => (
-        <Link key={i + 1} href={href(i + 1)} className={i + 1 === currentPage ? activeCls : neutralCls}>
+        <Link
+          key={i + 1}
+          href={href(i + 1)}
+          className={i + 1 === currentPage ? activeCls : neutralCls}
+          aria-current={i + 1 === currentPage ? 'page' : undefined}
+          aria-label={`Go to page ${i + 1}`}
+        >
           {i + 1}
         </Link>
       ))}
       {currentPage < totalPages && (
-        <Link href={href(currentPage + 1)} className={neutralCls}>Next →</Link>
+        <Link href={href(currentPage + 1)} className={neutralCls} aria-label='Go to next page'>Next →</Link>
       )}
     </div>
   )

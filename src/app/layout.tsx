@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { getSiteSettings } from '@/lib/contentful'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
+import AnalyticsProvider from '@/components/AnalyticsProvider'
 import './globals.css'
 
 export const metadata: Metadata = {
@@ -21,6 +22,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <Header settings={settings ?? undefined} />
         <main className='flex-1'>{children}</main>
         <Footer settings={settings ?? undefined} />
+        <AnalyticsProvider />
       </body>
     </html>
   )

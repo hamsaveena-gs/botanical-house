@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { useCartItems, useTotalPrice } from '@/features/cart/hooks/useCart'
 import { shippingSchema } from '@/lib/schemas'
+import { AnalyticsEvents } from '@/lib/analytics'
 import Heading from '@/components/ui/Heading'
 import ShippingForm from './components/ShippingForm'
 import CheckoutOrderSummary from './components/CheckoutOrderSummary'
@@ -30,7 +31,8 @@ export default function CheckoutPage({ cmsPage, formContent }: { cmsPage?: Page;
     setErrors((prev) => ({ ...prev, [e.target.name]: undefined }))
   }
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit: React.FormEventHandler = async (e) => {
+    AnalyticsEvents.beginCheckout(totalPrice)
     e.preventDefault()
     const result = shippingSchema.safeParse(form)
     if (!result.success) {
@@ -68,13 +70,14 @@ export default function CheckoutPage({ cmsPage, formContent }: { cmsPage?: Page;
     })
 
     localStorage.setItem('bh-last-order', JSON.stringify(order))
+    AnalyticsEvents.purchase({ id: order.id, value: order.total, items: order.items.length })
     window.location.href = '/order-confirmation'
   }
 
   return (
     <div className='mx-auto max-w-4xl px-4 pt-24 pb-12 sm:pt-28 sm:pb-20'>
       <Heading as='h1' variant='page'>{cmsPage?.fields.title ?? 'Checkout'}</Heading>
-      <form onSubmit={handleSubmit} className='mt-8 grid gap-8 lg:grid-cols-[1fr_380px]' noValidate>
+      <form onSubmit={handleSubmit} className='mt-8 grid gap-8 lg:grid-cols-[1fr_380px]' noValidate aria-label='Checkout form'>
         <ShippingForm form={form} errors={errors} onChange={handleChange} formContent={formContent} />
         <CheckoutOrderSummary items={items} totalPrice={totalPrice} allFilled={!Object.values(errors).some(Boolean)} />
       </form>

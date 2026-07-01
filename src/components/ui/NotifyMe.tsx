@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { AnalyticsEvents } from '@/lib/analytics'
 import Button from './Button'
 import Text from './Text'
 
@@ -26,6 +27,7 @@ export default function NotifyMe({ plantTitle, plantSlug }: Props) {
       })
       if (!res.ok) throw new Error()
       setStatus('success')
+      AnalyticsEvents.notifyMe({ name: plantTitle })
     } catch {
       setStatus('error')
     }
@@ -72,7 +74,7 @@ export default function NotifyMe({ plantTitle, plantSlug }: Props) {
         </Button>
       </div>
       {status === 'error' && (
-        <Text variant='caption' className='mt-1 block text-rose-500'>
+        <Text variant='caption' className='mt-1 block text-rose-500' role='alert'>
           Something went wrong. Try again.
         </Text>
       )}

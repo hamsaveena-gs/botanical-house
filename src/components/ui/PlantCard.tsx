@@ -1,6 +1,6 @@
 'use client'
 
-import { memo } from 'react'
+import { memo, useMemo } from 'react'
 
 import Link from 'next/link'
 import Image from 'next/image'
@@ -18,10 +18,18 @@ function PlantCard({ plant }: { plant: Plant }) {
   const { addItem, updateQuantity } = useCartActions()
   const { title, slug, image, price, compareAtPrice, category, featured, inStock } = plant.fields
   const qty = cartItem?.quantity ?? 0
-  const imgUrl = image?.fields?.file?.url ? `https:${image.fields.file.url}` : ''
-  const isOnSale = compareAtPrice != null && compareAtPrice !== price
-  const displayPrice = isOnSale ? Math.min(price, compareAtPrice!) : price
-  const originalPrice = isOnSale ? Math.max(price, compareAtPrice!) : null
+  const imgUrl = useMemo(
+    () => (image?.fields?.file?.url ? `https:${image.fields.file.url}` : ''),
+    [image],
+  )
+  const { isOnSale, displayPrice, originalPrice } = useMemo(() => {
+    const onSale = compareAtPrice != null && compareAtPrice !== price
+    return {
+      isOnSale: onSale,
+      displayPrice: onSale ? Math.min(price, compareAtPrice!) : price,
+      originalPrice: onSale ? Math.max(price, compareAtPrice!) : null,
+    }
+  }, [price, compareAtPrice])
 
   return (
     <Link href={`/plants/${slug?.trim()}`} className='group flex flex-col'>
@@ -30,18 +38,18 @@ function PlantCard({ plant }: { plant: Plant }) {
             <Image src={imgUrl} alt={title} fill sizes='(max-width: 640px) 50vw, 25vw' className='object-cover transition-transform duration-500 group-hover:scale-105' />
           )}
         {isOnSale && (
-          <Text as='span' className='absolute right-3 top-3 rounded-full bg-rose-600 px-3 py-1 text-xs font-semibold text-white shadow-sm'>
+          <Text as='span' role='status' className='absolute right-3 top-3 rounded-full bg-rose-600 px-3 py-1 text-xs font-semibold text-white shadow-sm'>
             Sale
           </Text>
         )}
         {featured && (
-          <Text as='span' className='absolute left-3 top-3 rounded-full bg-emerald-600 px-3 py-1 text-xs font-semibold text-white shadow-sm'>
+          <Text as='span' role='status' className='absolute left-3 top-3 rounded-full bg-emerald-600 px-3 py-1 text-xs font-semibold text-white shadow-sm'>
             Best Seller
           </Text>
         )}
         {!inStock && (
           <div className='absolute inset-0 flex items-center justify-center bg-white/60 backdrop-blur-[2px]'>
-            <Text as='span' className='rounded-full bg-neutral-800 px-4 py-1.5 text-sm font-semibold text-white'>
+            <Text as='span' role='status' className='rounded-full bg-neutral-800 px-4 py-1.5 text-sm font-semibold text-white'>
               Out of Stock
             </Text>
           </div>
@@ -74,6 +82,7 @@ function PlantCard({ plant }: { plant: Plant }) {
               onClick={(e) => { e.preventDefault(); e.stopPropagation(); addItem({ id: plant.sys.id, title, price, image: imgUrl, slug: slug?.trim() ?? '' }) }}
               size='md'
               className='w-full'
+              aria-label={`Add ${title} to cart`}
             >
               Add to Cart
             </Button>
@@ -84,6 +93,7 @@ function PlantCard({ plant }: { plant: Plant }) {
                 size='sm'
                 onClick={(e) => { e.preventDefault(); e.stopPropagation(); updateQuantity(plant.sys.id, qty - 1) }}
                 className='h-7 w-7 p-0'
+                aria-label={`Decrease quantity of ${title}`}
               >
                 −
               </Button>
@@ -94,6 +104,7 @@ function PlantCard({ plant }: { plant: Plant }) {
                 onClick={(e) => { e.preventDefault(); e.stopPropagation(); updateQuantity(plant.sys.id, qty + 1) }}
                 disabled={qty >= 2}
                 className='h-7 w-7 p-0'
+                aria-label={`Increase quantity of ${title}`}
               >
                 +
               </Button>

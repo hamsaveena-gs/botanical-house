@@ -38,7 +38,7 @@ describe('AddToCart', () => {
     useCartStore.getState().addItem({ id: '1', title: 'Peace Lily', price: 209, image: '/plant.jpg', slug: 'peace-lily' })
     useCartStore.getState().updateQuantity('1', 2)
     render(<AddToCart {...props} />)
-    const plusBtn = screen.getByRole('button', { name: '+' })
+    const plusBtn = screen.getByRole('button', { name: /increase quantity of peace lily/i })
     expect(plusBtn).toBeDisabled()
   })
 })

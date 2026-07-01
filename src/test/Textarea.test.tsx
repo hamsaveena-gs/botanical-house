@@ -9,9 +9,10 @@ describe('Textarea', () => {
     expect(screen.getByRole('textbox')).toBeInTheDocument()
   })
 
-  it('shows required asterisk', () => {
+  it('renders without asterisk when required', () => {
     render(<Textarea label='Message' id='msg' name='msg' required value='' onChange={vi.fn()} />)
-    expect(screen.getByText('Message *')).toBeInTheDocument()
+    expect(screen.getByText('Message')).toBeInTheDocument()
+    expect(screen.queryByText('*')).not.toBeInTheDocument()
   })
 
   it('does not render label when not provided', () => {

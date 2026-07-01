@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { contactSchema } from '@/lib/schemas'
+import { AnalyticsEvents } from '@/lib/analytics'
 import Input from '@/components/ui/Input'
 import Textarea from '@/components/ui/Textarea'
 import Button from '@/components/ui/Button'
@@ -57,6 +58,7 @@ export default function ContactForm({ formContent }: ContactFormProps) {
       setStatus('sent')
       setForm({ name: '', email: '', phone: '', message: '' })
       setErrors({})
+      AnalyticsEvents.contactFormSubmit()
     } catch {
       setStatus('error')
     }
@@ -74,28 +76,28 @@ export default function ContactForm({ formContent }: ContactFormProps) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className='space-y-6' noValidate>
+    <form onSubmit={handleSubmit} className='space-y-6' noValidate aria-label='Contact form'>
       <div>
-        <Input label={l.firstNameLabel} id='name' name='name' value={form.name} onChange={handleChange} />
-        {errors.name && <Text variant='caption' className='mt-1 text-rose-500'>{errors.name}</Text>}
+        <Input label={l.firstNameLabel} id='name' name='name' value={form.name} onChange={handleChange} error={errors.name} />
+        {errors.name && <Text variant='caption' className='mt-1 text-rose-500' id='name-error' role='alert'>{errors.name}</Text>}
       </div>
       <div>
-        <Input label={l.emailLabel} id='email' name='email' type='email' value={form.email} onChange={handleChange} />
-        {errors.email && <Text variant='caption' className='mt-1 text-rose-500'>{errors.email}</Text>}
+        <Input label={l.emailLabel} id='email' name='email' type='email' value={form.email} onChange={handleChange} error={errors.email} />
+        {errors.email && <Text variant='caption' className='mt-1 text-rose-500' id='email-error' role='alert'>{errors.email}</Text>}
       </div>
       <div>
-        <Input label={l.phoneLabel} id='phone' name='phone' type='tel' value={form.phone} onChange={handleChange} />
-        {errors.phone && <Text variant='caption' className='mt-1 text-rose-500'>{errors.phone}</Text>}
+        <Input label={l.phoneLabel} id='phone' name='phone' type='tel' value={form.phone} onChange={handleChange} error={errors.phone} />
+        {errors.phone && <Text variant='caption' className='mt-1 text-rose-500' id='phone-error' role='alert'>{errors.phone}</Text>}
       </div>
       <div>
-        <Textarea label={l.messageLabel} id='message' name='message' rows={5} value={form.message} onChange={handleChange} />
-        {errors.message && <Text variant='caption' className='mt-1 text-rose-500'>{errors.message}</Text>}
+        <Textarea label={l.messageLabel} id='message' name='message' rows={5} value={form.message} onChange={handleChange} error={errors.message} />
+        {errors.message && <Text variant='caption' className='mt-1 text-rose-500' id='message-error' role='alert'>{errors.message}</Text>}
       </div>
       <Button type='submit' disabled={status === 'sending'} className='w-full'>
         {status === 'sending' ? 'Sending...' : l.submitBtnText}
       </Button>
       {status === 'error' && (
-        <Text variant='muted' className='text-center text-red-500'>
+        <Text variant='muted' className='text-center text-red-500' role='alert'>
           Something went wrong. Please try again.
         </Text>
       )}
