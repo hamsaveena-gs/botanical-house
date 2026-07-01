@@ -10,8 +10,8 @@ const BG_MAP: Record<string, string> = {
   charcoal: 'bg-neutral-800',
   indigo: 'bg-indigo-600',
   'deep-indigo': 'bg-indigo-600',
-  emerald: 'bg-emerald-600',
-  'emerald-green': 'bg-emerald-600',
+  emerald: 'bg-emerald-700',
+  'emerald-green': 'bg-emerald-700',
   light: 'bg-neutral-100',
   'light-gray': 'bg-neutral-100',
   'light-grey': 'bg-neutral-100',
@@ -38,7 +38,7 @@ export default function RichTextSection({ fields }: { fields: RichTextSectionFie
           </Heading>
         )}
         {fields.body ? (
-          <Text as='div' variant='body' className={`whitespace-pre-line ${isDark ? 'text-neutral-200' : ''}`}>
+          <Text as='div' variant='body' className={`whitespace-pre-line ${isDark ? 'text-white' : ''}`}>
             {documentToReactComponents(fields.body as Parameters<typeof documentToReactComponents>[0]) as React.ReactNode}
           </Text>
         ) : null}

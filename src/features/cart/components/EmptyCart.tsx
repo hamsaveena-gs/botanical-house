@@ -14,7 +14,7 @@ export default function EmptyCart() {
       <Text variant='muted' className='mt-2 text-neutral-500'>
         Looks like you haven&apos;t added any plants yet.
       </Text>
-      <Link href='/plants' className='mt-8 rounded-full bg-emerald-600 px-10 py-3 text-sm font-semibold text-white transition-colors hover:bg-emerald-700'>
+      <Link href='/plants' className='mt-8 rounded-full bg-emerald-700 px-10 py-3 text-sm font-semibold text-white transition-colors hover:bg-emerald-700'>
         Browse Plants
       </Link>
     </div>

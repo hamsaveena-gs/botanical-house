@@ -23,7 +23,7 @@ export default async function PlantDetailPage({ slug }: { slug: string }) {
   return (
     <div className='px-4 py-12 sm:py-20'>
       <div className='mx-auto max-w-7xl'>
-        <Link href='/plants' className='mb-8 inline-block text-sm text-emerald-600 underline'>
+        <Link href='/plants' className='mb-8 inline-block text-sm text-emerald-700 underline'>
           &larr; Back to Plants
         </Link>
         <div className='grid gap-12 lg:grid-cols-2'>

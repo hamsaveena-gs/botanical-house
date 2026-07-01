@@ -51,7 +51,7 @@ function CheckoutOrderSummary({ items, totalPrice, allFilled }: CheckoutOrderSum
         </div>
         <div className='flex justify-between'>
           <Text as='span' variant='small'>Shipping</Text>
-          <Text as='span' variant='small' className={shipping === 0 ? 'text-emerald-600' : ''}>{shipping === 0 ? 'Free' : `₹${shipping}`}</Text>
+          <Text as='span' variant='small' className={shipping === 0 ? 'text-emerald-700' : ''}>{shipping === 0 ? 'Free' : `₹${shipping}`}</Text>
         </div>
         <div className='flex justify-between border-t border-neutral-200 pt-3'>
           <Text as='span' variant='body' className='font-semibold text-neutral-900'>Total</Text>

@@ -18,8 +18,8 @@ export default function CategoryFilters({ categories, activeSlugs }: CategoryFil
         href='/plants'
         className={`rounded-full px-5 py-2 text-sm font-medium transition-all ${
           activeSlugs.length === 0
-            ? 'bg-emerald-600 text-white border-emerald-600'
-            : 'border border-neutral-200 text-neutral-600 hover:border-emerald-600 hover:text-emerald-600'
+            ? 'bg-emerald-700 text-white border-emerald-700'
+            : 'border border-neutral-200 text-neutral-600 hover:border-emerald-700 hover:text-emerald-700'
         }`}
         aria-current={activeSlugs.length === 0 ? 'page' : undefined}
       >
@@ -37,8 +37,8 @@ export default function CategoryFilters({ categories, activeSlugs }: CategoryFil
             href={href(next)}
             className={`rounded-full px-5 py-2 text-sm font-medium transition-all ${
               isActive
-                ? 'bg-emerald-600 text-white border-emerald-600'
-                : 'border border-neutral-200 text-neutral-600 hover:border-emerald-600 hover:text-emerald-600'
+                ? 'bg-emerald-700 text-white border-emerald-700'
+                : 'border border-neutral-200 text-neutral-600 hover:border-emerald-700 hover:text-emerald-700'
             }`}
             aria-current={isActive ? 'page' : undefined}
           >

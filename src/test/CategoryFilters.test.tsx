@@ -17,6 +17,6 @@ describe('CategoryFilters', () => {
   it('highlights active category', () => {
     render(<CategoryFilters categories={categories} activeSlugs={['indoor']} />)
     const active = screen.getByText('Indoor Plants')
-    expect(active.className).toContain('bg-emerald-600')
+    expect(active.className).toContain('bg-emerald-700')
   })
 })

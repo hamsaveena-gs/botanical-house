@@ -21,7 +21,7 @@ function NavLink({ href, label, onClick }: { href: string; label: string; onClic
       href={href}
       onClick={onClick}
       className={`text-sm font-medium transition-colors ${
-        active ? 'text-emerald-600' : 'text-neutral-500 hover:text-neutral-900'
+        active ? 'text-emerald-700' : 'text-neutral-500 hover:text-neutral-900'
       }`}
     >
       {label}
@@ -61,7 +61,7 @@ export default function Header({ settings }: Props) {
               <path d='M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6'/>
             </svg>
             {totalItems > 0 && (
-              <span className='absolute -right-3 -top-2 flex h-5 w-5 items-center justify-center rounded-full bg-emerald-600 text-xs font-bold text-white'>
+              <span className='absolute -right-3 -top-2 flex h-5 w-5 items-center justify-center rounded-full bg-emerald-700 text-xs font-bold text-white'>
                 {totalItems}
               </span>
             )}

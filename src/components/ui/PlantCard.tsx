@@ -43,7 +43,7 @@ function PlantCard({ plant }: { plant: Plant }) {
           </Text>
         )}
         {featured && (
-          <Text as='span' role='status' className='absolute left-3 top-3 rounded-full bg-emerald-600 px-3 py-1 text-xs font-semibold text-white shadow-sm'>
+          <Text as='span' role='status' className='absolute left-3 top-3 rounded-full bg-emerald-700 px-3 py-1 text-xs font-semibold text-white shadow-sm'>
             Best Seller
           </Text>
         )}
@@ -69,7 +69,7 @@ function PlantCard({ plant }: { plant: Plant }) {
         <div className='mt-1 flex items-center gap-2'>
           <Text as='span' className='text-lg font-bold text-neutral-900'>₹{displayPrice.toLocaleString()}</Text>
           {originalPrice && (
-            <Text as='span' className='text-sm text-neutral-400 line-through'>₹{originalPrice.toLocaleString()}</Text>
+            <Text as='span' className='text-sm text-neutral-500 line-through'>₹{originalPrice.toLocaleString()}</Text>
           )}
         </div>
         <div className='mt-auto pt-3'>

@@ -26,12 +26,12 @@ function OrderSummary({ totalPrice }: OrderSummaryProps) {
         </div>
         <div className='flex justify-between'>
           <Text as='span' variant='body'>Shipping</Text>
-          <Text as='span' variant='body' className={shipping === 0 ? 'text-emerald-600' : ''}>
+          <Text as='span' variant='body' className={shipping === 0 ? 'text-emerald-700' : ''}>
             {shipping === 0 ? 'Free' : `₹${shipping}`}
           </Text>
         </div>
         {shipping > 0 && (
-          <Text variant='caption' className='text-neutral-400'>
+          <Text variant='caption' className='text-neutral-500'>
             Free shipping on orders above ₹500
           </Text>
         )}

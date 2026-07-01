@@ -32,7 +32,7 @@ describe('RichTextSection', () => {
 
   it('applies dark bg class for emerald', () => {
     const { container } = render(<RichTextSection fields={{ heading: 'Test', body: mockBody, backgroundColor: 'emerald' }} />)
-    expect(container.querySelector('section')?.className).toContain('bg-emerald-600')
+    expect(container.querySelector('section')?.className).toContain('bg-emerald-700')
   })
 
   it('applies light bg class for white', () => {
@@ -47,6 +47,6 @@ describe('RichTextSection', () => {
 
   it('handles display-name alias (Emerald Green)', () => {
     const { container } = render(<RichTextSection fields={{ heading: 'Test', body: mockBody, backgroundColor: 'Emerald Green' }} />)
-    expect(container.querySelector('section')?.className).toContain('bg-emerald-600')
+    expect(container.querySelector('section')?.className).toContain('bg-emerald-700')
   })
 })

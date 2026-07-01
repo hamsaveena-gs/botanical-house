@@ -34,7 +34,7 @@ describe('Pagination', () => {
 
   it('highlights active page', () => {
     render(<Pagination currentPage={2} totalPages={3} category='' />)
-    expect(screen.getByText('2').className).toContain('bg-emerald-600')
+    expect(screen.getByText('2').className).toContain('bg-emerald-700')
   })
 
   it('preserves category in links', () => {

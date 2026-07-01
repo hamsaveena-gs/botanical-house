@@ -35,7 +35,7 @@ export default function NotifyMe({ plantTitle, plantSlug }: Props) {
 
   if (status === 'success') {
     return (
-      <Text variant='caption' className='block text-center text-emerald-600'>
+      <Text variant='caption' className='block text-center text-emerald-700'>
         We&apos;ll let you know when it&apos;s back!
       </Text>
     )
@@ -65,7 +65,7 @@ export default function NotifyMe({ plantTitle, plantSlug }: Props) {
           onChange={(e) => { setEmail(e.target.value); setStatus('idle') }}
           onClick={(e) => { e.preventDefault(); e.stopPropagation() }}
           onMouseDown={(e) => e.stopPropagation()}
-          className='min-w-0 flex-1 rounded-full border border-neutral-300 px-4 py-2 text-sm outline-none transition-all focus:border-emerald-600'
+          className='min-w-0 flex-1 rounded-full border border-neutral-300 px-4 py-2 text-sm outline-none transition-all focus:border-emerald-700'
           autoFocus
           required
         />

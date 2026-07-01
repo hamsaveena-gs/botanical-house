@@ -59,7 +59,7 @@ export default function OrderConfirmationPage() {
   return (
     <div className='flex flex-1 items-center justify-center px-4 pt-24 pb-12 sm:pt-28 sm:pb-20'>
       <div className='flex max-w-md flex-col items-center text-center'>
-        <div className='mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-emerald-600 text-2xl text-white'>✓</div>
+        <div className='mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-emerald-700 text-2xl text-white'>✓</div>
         <Heading as='h1' variant='section'>Order Confirmed!</Heading>
         <Text variant='muted'>Thank you, {order.name}. Your order has been placed.</Text>
         <div className='mt-6 w-full rounded-xl border border-neutral-200 p-5 flex flex-col gap-3'>
@@ -70,7 +70,7 @@ export default function OrderConfirmationPage() {
             </div>
           ))}
         </div>
-        <Text variant='caption' className='mt-4 text-emerald-600'>
+        <Text variant='caption' className='mt-4 text-emerald-700'>
           A confirmation email has been sent to {order.email}.
         </Text>
         <div className='mt-6 flex gap-3'>

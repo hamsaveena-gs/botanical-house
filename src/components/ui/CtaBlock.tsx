@@ -10,8 +10,8 @@ const BG_MAP: Record<string, string> = {
   charcoal: 'bg-neutral-800',
   indigo: 'bg-indigo-600',
   'deep-indigo': 'bg-indigo-600',
-  emerald: 'bg-emerald-600',
-  'emerald-green': 'bg-emerald-600',
+  emerald: 'bg-emerald-700',
+  'emerald-green': 'bg-emerald-700',
   light: 'bg-neutral-100',
   'light-gray': 'bg-neutral-100',
   'light-grey': 'bg-neutral-100',
@@ -34,7 +34,7 @@ export default function CtaBlock({ fields }: { fields: CtaBlockFields }) {
       <div className='mx-auto max-w-2xl'>
         <Heading as='h2' variant='section' className={`mb-4 ${isDark ? 'text-white' : 'text-neutral-900'}`}>{fields.heading}</Heading>
         {fields.description && (
-          <Text as='p' className={`mb-8 text-lg whitespace-pre-line ${isDark ? 'text-neutral-200' : 'text-neutral-600'}`}>{fields.description}</Text>
+          <Text as='p' className={`mb-8 text-lg whitespace-pre-line ${isDark ? 'text-white' : 'text-neutral-600'}`}>{fields.description}</Text>
         )}
         <Button href={fields.buttonUrl} variant={isDark ? 'white' : 'primary'} size='md'>{fields.buttonText}</Button>
       </div>

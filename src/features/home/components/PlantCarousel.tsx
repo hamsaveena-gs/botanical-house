@@ -37,9 +37,9 @@ export default function PlantCarousel({ fields }: { fields: PlantGridSectionFiel
       <div className='mx-auto max-w-7xl'>
         {fields.heading && (
           <div className='mb-14 text-center'>
-            <span className='mb-3 inline-block text-xs font-semibold uppercase tracking-widest text-emerald-600'>Plants</span>
+            <span className='mb-3 inline-block text-xs font-semibold uppercase tracking-widest text-emerald-700'>Plants</span>
             <Heading as='h2' variant='page' className='sm:text-5xl'>{fields.heading}</Heading>
-            <div className='mx-auto mt-4 h-1 w-16 rounded-full bg-emerald-600' />
+            <div className='mx-auto mt-4 h-1 w-16 rounded-full bg-emerald-700' />
           </div>
         )}
 

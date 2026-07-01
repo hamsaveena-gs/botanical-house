@@ -34,8 +34,8 @@ module.exports = {
           light: '#525252',
         },
         btn: {
-          primary: '#059669',
-          'primary-hover': '#047857',
+          primary: '#047857',
+          'primary-hover': '#065f46',
           secondary: '#d4d4d4',
           ghost: '#525252',
           'ghost-hover': '#f5f5f5',

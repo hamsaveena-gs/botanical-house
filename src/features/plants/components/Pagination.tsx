@@ -17,8 +17,8 @@ export default function Pagination({ currentPage, totalPages, category }: Pagina
     return `/plants${qs ? `?${qs}` : ''}`
   }
 
-  const neutralCls = 'rounded-full border border-neutral-200 px-4 py-2 text-sm font-medium text-neutral-600 transition-all hover:border-emerald-600 hover:text-emerald-600'
-  const activeCls = 'rounded-full bg-emerald-600 px-4 py-2 text-sm font-medium text-white'
+  const neutralCls = 'rounded-full border border-neutral-200 px-4 py-2 text-sm font-medium text-neutral-600 transition-all hover:border-emerald-700 hover:text-emerald-700'
+  const activeCls = 'rounded-full bg-emerald-700 px-4 py-2 text-sm font-medium text-white'
 
   return (
     <div className='mt-12 flex items-center justify-center gap-2' role='navigation' aria-label='Pagination'>

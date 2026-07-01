@@ -53,7 +53,7 @@ function CartItem({ item, onUpdateQuantity, onRemove }: CartItemProps) {
       </div>
       <div className='flex flex-1 flex-col justify-between'>
         <div>
-          <Link href={`/plants/${item.slug}`} className='font-semibold text-neutral-900 transition-colors hover:text-emerald-600'>
+          <Link href={`/plants/${item.slug}`} className='font-semibold text-neutral-900 transition-colors hover:text-emerald-700'>
             {item.title}
           </Link>
           <Text variant='small' className='mt-0.5 text-sm text-neutral-300'>

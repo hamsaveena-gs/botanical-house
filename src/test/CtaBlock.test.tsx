@@ -29,7 +29,7 @@ describe('CtaBlock', () => {
 
   it('applies dark bg class for emerald', () => {
     const { container } = render(<CtaBlock fields={{ ...fields, backgroundColor: 'emerald' }} />)
-    expect(container.querySelector('section')?.className).toContain('bg-emerald-600')
+    expect(container.querySelector('section')?.className).toContain('bg-emerald-700')
   })
 
   it('applies light bg class for white', () => {

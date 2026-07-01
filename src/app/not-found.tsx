@@ -10,7 +10,7 @@ export default function NotFound() {
       <Text variant='muted' className='mt-4 text-lg text-neutral-500'>
         This page seems to have wandered off.
       </Text>
-      <Button href='/' variant='primary' size='lg' className='mt-8 inline-flex items-center gap-2 rounded-full bg-emerald-600 px-8 py-3 text-sm font-semibold text-white transition-colors hover:bg-emerald-700'>
+      <Button href='/' variant='primary' size='lg' className='mt-8 inline-flex items-center gap-2 rounded-full bg-emerald-700 px-8 py-3 text-sm font-semibold text-white transition-colors hover:bg-emerald-700'>
         ← Back to Home
       </Button>
     </div>
