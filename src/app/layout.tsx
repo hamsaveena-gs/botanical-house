@@ -19,6 +19,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   return (
       <html lang='en' data-scroll-behavior='smooth'>
       <head>
+        <link rel='preconnect' href='https://images.ctfassets.net' />
+        <link rel='preconnect' href='https://downloads.ctfassets.net' />
         <link rel='preload' href='/font/Comfortaa-Bold.woff2' as='font' type='font/woff2' crossOrigin='anonymous' />
         <link rel='preload' href='/font/Comfortaa-SemiBold.woff2' as='font' type='font/woff2' crossOrigin='anonymous' />
         <link rel='preload' href='/font/Comfortaa-Regular.woff2' as='font' type='font/woff2' crossOrigin='anonymous' />
