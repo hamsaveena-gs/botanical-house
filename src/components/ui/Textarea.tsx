@@ -41,11 +41,16 @@ export default function Textarea({
         rows={rows}
         value={value}
         onChange={onChange}
-        className={cls}
+        className={`${cls} ${error ? 'border-rose-500 focus:border-rose-500 focus:ring-rose-500/20' : ''}`}
         aria-invalid={!!error}
         aria-describedby={error ? errorId : undefined}
         aria-required={required || undefined}
       />
+      {error && (
+        <Text as='span' variant='caption' id={errorId} role='alert' className='mt-1 block text-rose-500'>
+          {error}
+        </Text>
+      )}
     </div>
   )
 }
