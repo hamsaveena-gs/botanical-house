@@ -13,7 +13,14 @@ export default function ProductImages({ images, title }: ProductImagesProps) {
         const url = img?.fields?.file?.url ? `https:${img.fields.file.url}` : ''
         return url ? (
           <div key={i} className='relative aspect-[4/5] w-full overflow-hidden rounded-2xl'>
-            <Image src={url} alt={`${title} ${i + 1}`} fill sizes='(max-width: 768px) 100vw, 50vw' className='object-cover' />
+            <Image
+              src={url}
+              alt={`${title} ${i + 1}`}
+              fill
+              sizes='(max-width: 768px) 100vw, 50vw'
+              className='object-cover'
+              priority={i === 0}
+            />
           </div>
         ) : null
       })}
