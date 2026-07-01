@@ -27,8 +27,11 @@ export default function CheckoutPage({ cmsPage, formContent }: { cmsPage?: Page;
   if (items.length === 0) return null
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }))
+    const next = { ...form, [e.target.name]: e.target.value }
+    setForm(next)
     setErrors((prev) => ({ ...prev, [e.target.name]: undefined }))
+    window.dataLayer = window.dataLayer || []
+    window.dataLayer.push({ event: 'form_field_change', form_type: 'shipping', field: e.target.name, form_values: next })
   }
 
   const handleSubmit: React.FormEventHandler = async (e) => {
@@ -37,14 +40,16 @@ export default function CheckoutPage({ cmsPage, formContent }: { cmsPage?: Page;
     const result = shippingSchema.safeParse(form)
     if (!result.success) {
       const fieldErrors = result.error.flatten().fieldErrors
-      setErrors({
-        name: fieldErrors.name?.[0],
-        email: fieldErrors.email?.[0],
-        phone: fieldErrors.phone?.[0],
-        address: fieldErrors.address?.[0],
-        city: fieldErrors.city?.[0],
-        pincode: fieldErrors.pincode?.[0],
-      })
+      const errs: Record<string, string> = {}
+      if (fieldErrors.name?.[0]) errs.name = fieldErrors.name[0]
+      if (fieldErrors.email?.[0]) errs.email = fieldErrors.email[0]
+      if (fieldErrors.phone?.[0]) errs.phone = fieldErrors.phone[0]
+      if (fieldErrors.address?.[0]) errs.address = fieldErrors.address[0]
+      if (fieldErrors.city?.[0]) errs.city = fieldErrors.city[0]
+      if (fieldErrors.pincode?.[0]) errs.pincode = fieldErrors.pincode[0]
+      setErrors(errs)
+      window.dataLayer = window.dataLayer || []
+      window.dataLayer.push({ event: 'form_error', form_type: 'shipping', filled_fields: form, errors: errs })
       return
     }
     const shipping = totalPrice >= 500 ? 0 : 49
@@ -71,6 +76,8 @@ export default function CheckoutPage({ cmsPage, formContent }: { cmsPage?: Page;
 
     localStorage.setItem('bh-last-order', JSON.stringify(order))
     AnalyticsEvents.purchase({ id: order.id, value: order.total, items: order.items.length })
+    window.dataLayer = window.dataLayer || []
+    window.dataLayer.push({ event: 'form_success', form_type: 'shipping', filled_fields: form })
     window.location.href = '/order-confirmation'
   }
 
