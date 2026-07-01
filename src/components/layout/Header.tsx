@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import { useSelectedLayoutSegment } from 'next/navigation'
 import { useTotalItems } from '@/features/cart/hooks/useCart'
 import { useScrollLock } from '@/hooks/useScrollLock'
 import type { SiteSettings } from '@/types'
@@ -14,8 +14,8 @@ interface Props {
 }
 
 function NavLink({ href, label, onClick }: { href: string; label: string; onClick?: () => void }) {
-  const pathname = usePathname()
-  const active = pathname === href || (href !== '/' && pathname.startsWith(href))
+  const segment = useSelectedLayoutSegment()
+  const active = href === '/' ? segment === null : segment === href.replace(/^\//, '')
   return (
     <Link
       href={href}
