@@ -85,6 +85,7 @@ export interface SiteSettings {
   sys: { id: string }
   fields: {
     siteName: string
+    siteDescription?: string
     navLinks: { id: string; label: string; href: string }[]
     footerText: string
   }

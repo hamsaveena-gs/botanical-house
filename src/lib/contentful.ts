@@ -41,12 +41,14 @@ function parseSiteSettings(raw: unknown): SiteSettings {
       footerText?: string
     }
   }
+  const rawFields = entry.fields as { siteName?: string; siteDescription?: string; navlist?: unknown[]; footerText?: string }
   return {
     sys: entry.sys,
     fields: {
-      siteName: entry.fields.siteName ?? 'Botanical House',
-      navLinks: (entry.fields.navlist ?? []).map(parseNavigationLink),
-      footerText: entry.fields.footerText ?? '',
+      siteName: rawFields.siteName ?? 'Botanical House',
+      siteDescription: rawFields.siteDescription ?? undefined,
+      navLinks: (rawFields.navlist ?? []).map(parseNavigationLink),
+      footerText: rawFields.footerText ?? '',
     },
   } as SiteSettings
 }

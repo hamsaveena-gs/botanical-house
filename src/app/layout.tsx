@@ -5,12 +5,18 @@ import Footer from '@/components/layout/Footer'
 import AnalyticsProvider from '@/components/AnalyticsProvider'
 import './globals.css'
 
-export const metadata: Metadata = {
-  title: {
-    default: 'Botanical House — Bring Nature Home',
-    template: '%s | Botanical House',
-  },
-  description: 'Premium plants delivered to your doorstep',
+export async function generateMetadata(): Promise<Metadata> {
+  const settings = await getSiteSettings()
+  const siteName = settings?.fields.siteName ?? 'Botanical House'
+  const description = settings?.fields.siteDescription ?? 'Premium plants delivered to your doorstep'
+
+  return {
+    title: {
+      default: `${siteName} — Bring Nature Home`,
+      template: `%s | ${siteName}`,
+    },
+    description,
+  }
 }
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
