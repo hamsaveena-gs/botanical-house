@@ -19,11 +19,11 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   return (
       <html lang='en' data-scroll-behavior='smooth'>
       <head>
-        <link rel='preload' href='/font/Comfortaa-Bold.ttf' as='font' type='font/ttf' crossOrigin='anonymous' />
-        <link rel='preload' href='/font/Comfortaa-SemiBold.ttf' as='font' type='font/ttf' crossOrigin='anonymous' />
-        <link rel='preload' href='/font/Comfortaa-Regular.ttf' as='font' type='font/ttf' crossOrigin='anonymous' />
-        <link rel='preload' href='/font/Comfortaa-Medium.ttf' as='font' type='font/ttf' crossOrigin='anonymous' />
-        <link rel='preload' href='/font/Comfortaa-Light.ttf' as='font' type='font/ttf' crossOrigin='anonymous' />
+        <link rel='preload' href='/font/Comfortaa-Bold.woff2' as='font' type='font/woff2' crossOrigin='anonymous' />
+        <link rel='preload' href='/font/Comfortaa-SemiBold.woff2' as='font' type='font/woff2' crossOrigin='anonymous' />
+        <link rel='preload' href='/font/Comfortaa-Regular.woff2' as='font' type='font/woff2' crossOrigin='anonymous' />
+        <link rel='preload' href='/font/Comfortaa-Medium.woff2' as='font' type='font/woff2' crossOrigin='anonymous' />
+        <link rel='preload' href='/font/Comfortaa-Light.woff2' as='font' type='font/woff2' crossOrigin='anonymous' />
       </head>
       <body className='flex min-h-screen flex-col antialiased' suppressHydrationWarning>
         <Header settings={settings ?? undefined} />

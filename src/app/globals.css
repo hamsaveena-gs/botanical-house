@@ -4,7 +4,7 @@
 
 @font-face {
   font-family: "Comfortaa";
-  src: url("/font/Comfortaa-Light.ttf") format("truetype");
+  src: url("/font/Comfortaa-Light.woff2") format("woff2");
   font-weight: 300;
   font-style: normal;
   font-display: swap;
@@ -12,7 +12,7 @@
 
 @font-face {
   font-family: "Comfortaa";
-  src: url("/font/Comfortaa-Regular.ttf") format("truetype");
+  src: url("/font/Comfortaa-Regular.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -20,7 +20,7 @@
 
 @font-face {
   font-family: "Comfortaa";
-  src: url("/font/Comfortaa-Medium.ttf") format("truetype");
+  src: url("/font/Comfortaa-Medium.woff2") format("woff2");
   font-weight: 500;
   font-style: normal;
   font-display: swap;
@@ -28,7 +28,7 @@
 
 @font-face {
   font-family: "Comfortaa";
-  src: url("/font/Comfortaa-SemiBold.ttf") format("truetype");
+  src: url("/font/Comfortaa-SemiBold.woff2") format("woff2");
   font-weight: 600;
   font-style: normal;
   font-display: swap;
@@ -36,7 +36,7 @@
 
 @font-face {
   font-family: "Comfortaa";
-  src: url("/font/Comfortaa-Bold.ttf") format("truetype");
+  src: url("/font/Comfortaa-Bold.woff2") format("woff2");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
